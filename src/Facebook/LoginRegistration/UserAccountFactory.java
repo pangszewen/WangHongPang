@@ -23,7 +23,7 @@ public class UserAccountFactory{
                 String storedPassword = userData[3];
 
                 // Check if the entered username/email and password match the stored data
-                if ((emailOrPhoneNo.equalsIgnoreCase(storedUsername) || emailOrPhoneNo.equalsIgnoreCase(storedEmail))
+                if ((emailOrPhoneNo.equals(storedUsername) || emailOrPhoneNo.equals(storedEmail))
                      && password.equals(storedPassword)) {
                     return true; // User found, login successful
                 }
@@ -34,7 +34,35 @@ public class UserAccountFactory{
         return false;
     }
 
-    public static UserAccount 
+    public static boolean isAdmin(String emailOrPhoneNo){
+        try (BufferedReader reader = new BufferedReader(new FileReader("user_data.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] userData = line.split(",");
+                String storedUsername = userData[1];
+                String storedEmail = userData[2];
+                String storedRole = userData[4];
+
+                // Check if the entered username/email is admin or not
+                if ((emailOrPhoneNo.equals(storedUsername) || emailOrPhoneNo.equals(storedEmail))
+                     && storedRole.equalsIgnoreCase("Admin")) {
+                    return true; // User found, login successful
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static UserAccount getProfile(String emailOrPhoneNo, boolean status){
+        NormalUser normalUser = new NormalUser();
+        AdminUser adminUser = new AdminUser();
+        if(status)
+            return normalUser.getUserProfile(emailOrPhoneNo);
+        else
+            return adminUser.getUserProfile(emailOrPhoneNo);
+    }
 
     public static boolean deleteAccount(UserAccount user){
         if()

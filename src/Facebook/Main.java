@@ -35,8 +35,10 @@ public class Main {
             case 2: System.out.println("Registration form");
                     System.out.println("Username:");
                     username = sc.nextLine();
+                    sc.next();
             	    System.out.println("Email:");
                     email = sc.nextLine();
+                    sc.next();
                     System.out.println("Phone no:");
                     phoneNo = sc.nextLine();
                     System.out.println("Password:");
