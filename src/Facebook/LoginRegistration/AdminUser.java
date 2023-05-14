@@ -14,7 +14,7 @@ import java.util.Stack;
 
 public class AdminUser extends UserAccount{
     Scanner sc = new Scanner(System.in);
-    private String name, address, role;
+    private String name, address, role, status;
     private char gender;
     private int age, noOfFriends;
     private ArrayList<String> hobbies;
@@ -23,7 +23,7 @@ public class AdminUser extends UserAccount{
 
     public AdminUser(){}
 
-    public AdminUser(String accountID, String phoneNo, String role, String name, String username, LocalDate birthday, int age, String address, char gender, int noOfFriends, ArrayList<String> hobbies, Stack<String> jobs){
+    public AdminUser(String accountID, String phoneNo, String role, String name, String username, LocalDate birthday, int age, String address, char gender, String status, int noOfFriends, ArrayList<String> hobbies, Stack<String> jobs){
         super(username, address, phoneNo);
         this.accountID = accountID;
         this.role = role;
@@ -33,6 +33,7 @@ public class AdminUser extends UserAccount{
         this.age = age;
         this.address = address;
         this.gender = gender;
+        this.status = status;
         this.noOfFriends = noOfFriends;
         this.hobbies = hobbies;
         this.jobs = jobs;
@@ -54,6 +55,7 @@ public class AdminUser extends UserAccount{
                          age + "," +
                          address + "," +
                          gender + "," +
+                         status + "," +
                          noOfFriends + "," +
                          hobbies + "," +
                          jobs);
@@ -84,6 +86,8 @@ public class AdminUser extends UserAccount{
         gender = sc.next().charAt(0);
         sc.nextLine();
         noOfFriends = 0;
+        System.out.println("What is your relationship status?");
+        status = sc.nextLine();
         System.out.println("What are your hobbies?");
         this.hobbies.add(sc.nextLine());
         System.out.print("Do you wish to add more hobbies? (y-yes, n-no)");
@@ -110,7 +114,7 @@ public class AdminUser extends UserAccount{
 
                 // Check if the entered username/email and password match the stored data
                 if (emailOrPhoneNo.equals(storedUsername) || emailOrPhoneNo.equals(storedEmail)){
-                    return new AdminUser(storedEmail, emailOrPhoneNo, line, storedUsername, storedUsername, birthday, age, storedEmail, gender, noOfFriends, hobbies, jobs); // User found, login successful
+                    return new AdminUser(storedEmail, emailOrPhoneNo, line, storedUsername, storedUsername, birthday, age, storedEmail, gender, status, noOfFriends, hobbies, jobs); // User found, login successful
                 }
             }
         } catch (IOException e) {

@@ -41,13 +41,16 @@ public class Main {
                     sc.next();
                     System.out.println("Phone no:");
                     phoneNo = sc.nextLine();
+                    sc.next();
                     System.out.println("Password:");
                     password = sc.nextLine();
+                    sc.next();
                     status = strongPassword(password);
                     while(!status){
                         System.out.println("Your password is not strong enough, please use a stronger password.");
                         System.out.println("Password:");
                         password = sc.nextLine();
+                        sc.next();
                         status = strongPassword(password);
                     }
                     System.out.println("Confirm password:");

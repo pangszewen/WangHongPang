@@ -93,13 +93,13 @@ public class NormalUser extends UserAccount{
         char choice = sc.next().charAt(0);
         sc.nextLine();
         while(choice=='y'){
-            hobbies.add(sc.nextLine());
+            hobbies.add(sc.nextLine());        // ArrayList
             System.out.print("Do you wish to add more hobbies? (y-yes, n-no)");
             choice = sc.next().charAt(0);
             sc.nextLine();
         }
         System.out.println("What is your current job?");
-        jobs.push(sc.next());
+        jobs.push(sc.next());           // stack
         System.out.println("That's all for the account setup. You are now ready to explore Facebook!");
     }
 
