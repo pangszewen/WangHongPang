@@ -59,12 +59,17 @@ public class UserAccountFactory{
         NormalUser normalUser = new NormalUser();
         AdminUser adminUser = new AdminUser();
         if(status)
-            return normalUser.getUserProfile(emailOrPhoneNo);
-        else
             return adminUser.getUserProfile(emailOrPhoneNo);
+        else
+            return normalUser.getUserProfile(emailOrPhoneNo);
     }
 
-    public static boolean deleteAccount(UserAccount user){
-        if()
+    public static void deleteAccount(String accountID, boolean status){
+        NormalUser normalUser = new NormalUser();
+        AdminUser adminUser = new AdminUser();
+        if(status)
+            adminUser.deleteAccount(accountID);
+        else
+            normalUser.deleteAccount(accountID);
     }
 }

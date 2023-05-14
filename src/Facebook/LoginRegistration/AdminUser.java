@@ -1,16 +1,9 @@
 package Facebook.LoginRegistration;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Stack;
 
 public class AdminUser extends UserAccount{
     Scanner sc = new Scanner(System.in);

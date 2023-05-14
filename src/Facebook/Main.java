@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         UserAccount user;
+        UserAccount viewingUser;
         String email, username, password, phoneNo;
         boolean status;
 
@@ -28,42 +29,41 @@ public class Main {
                         System.out.println("Incorrect email/phoneNo or incorrect password");
                     boolean isAdmin = UserAccountFactory.isAdmin(emailOrPhoneNo);
                     user = UserAccountFactory.getProfile(emailOrPhoneNo, isAdmin);
-                    user.deleteAccount("40657");
-                    user.deleteAccount("85041");
-                    user.deleteAccount("29442");
                     break;
             case 2: System.out.println("Registration form");
-                    System.out.println("Username:");
+                    System.out.print("Username:");
+                    sc.nextLine();
                     username = sc.nextLine();
-                    sc.next();
-            	    System.out.println("Email:");
+            	    System.out.print("Email:");
+     
                     email = sc.nextLine();
-                    sc.next();
-                    System.out.println("Phone no:");
+                    System.out.print("Phone no:");
+
                     phoneNo = sc.nextLine();
-                    sc.next();
+                    System.out.println("Your password should contains at least 1 uppercase, 1 lowercase, 1 number and 1 special character.");
                     System.out.println("Password:");
+          
                     password = sc.nextLine();
-                    sc.next();
                     status = strongPassword(password);
                     while(!status){
                         System.out.println("Your password is not strong enough, please use a stronger password.");
                         System.out.println("Password:");
+  
                         password = sc.nextLine();
-                        sc.next();
                         status = strongPassword(password);
                     }
                     System.out.println("Confirm password:");
+ 
                     String confirmPassword = sc.nextLine();
                     status = checkPassword(password, confirmPassword);
                     while(!status){
                         System.out.println("Your password does not match, please confirm your password.");
                         System.out.println("Confirm password:");
+
                         confirmPassword = sc.nextLine();
                         status = checkPassword(password, confirmPassword);
-
-                    }                       
-                    
+                    }
+                    user = UserAccountFactory.createAccount(username, email, password, phoneNo, "Normal");                    
         }
     }
 
