@@ -3,6 +3,8 @@ package Facebook.Login_Registration;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import Facebook.Database;
+
 public class User {
     Database database;
     private String accountID;
@@ -20,6 +22,7 @@ public class User {
     private int noOfFriends;
     private ArrayList<String> hobbies;
     private Stack<String> jobs;
+    private Stack<String> requestList;
 
     public User(UserBuilder builder){
         this.accountID = builder.accountID;
@@ -37,6 +40,7 @@ public class User {
         this.noOfFriends = builder.noOfFriends;
         this.hobbies = builder.hobbies;
         this.jobs = builder.jobs;
+        this.requestList = builder.requestList;
 
     }
 
@@ -134,6 +138,9 @@ public class User {
     public void setHobbies(String hobbies){
         this.hobbies.add(hobbies);
     }
+    public void setHobbies(ArrayList<String> hobbies){
+        this.hobbies = hobbies;
+    }
     public ArrayList<String> getHobbies(){
         return hobbies;
     }
@@ -141,8 +148,21 @@ public class User {
     public void setJobs(String job){
         this.jobs.push(job);
     }
+    public void setJobs(Stack<String> jobs){
+        this.jobs = jobs;
+    }
     public Stack<String> getJobs(){
         return jobs;
+    }
+
+    public void setRequestList(String username){
+        this.requestList.push(username);
+    }
+    public void setRequestList(Stack<String> requestList){
+        this.requestList = requestList;
+    }
+    public Stack<String> getRequestList(){
+        return requestList;
     }
 
 
