@@ -87,82 +87,6 @@ public class Database {
         }
     }
 
-    /* WASTED
-    public void updateProfile(User user){
-        String accountID = user.getAccountID();
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] rowData = line.split(",");
-                if(rowData[0].equals(accountID)){
-
-                    if(!rowData[1].equals(user.getUsername()))
-                        rowData[1] = user.getUsername();
-
-                    if(!rowData[2].equals(user.getEmail()))
-                        rowData[2] = user.getEmail();
-
-                    if(!rowData[3].equals(user.getPhoneNo()))
-                        rowData[3] = user.getPhoneNo();
-                    
-                    if(!rowData[4].equals(user.getPassword()))
-                        rowData[4] = user.getPassword();
-                
-                    if(!rowData[5].equals(user.getRole()));
-                        rowData[5] = user.getRole();
-                    
-                    if(!rowData[6].equals(user.getName()));
-                        rowData[6] = user.getName();
-
-                    if(!rowData[7].equals(user.getBirthday()));
-                        rowData[7] = user.getBirthday();
-
-                    if(!rowData[8].equals(String.valueOf(user.getAge())));
-                        rowData[8] = String.valueOf(user.getAge());
-
-                    if(!rowData[9].substring(2, rowData[9].length()-2).equals(user.getAddress()))
-                        rowData[9] = String.format("\"%s\"", user.getAddress());
-
-                    if(!rowData[10].equals(String.valueOf(user.getGender())))
-                        rowData[10] = String.valueOf(user.getGender());
-                    
-                    if(!rowData[11].equals(user.getStatus()))
-                        rowData[11] = user.getStatus();
-                    
-                    if(!rowData[12].equals(String.valueOf(user.getNoOfFriends())))
-                        rowData[12] = String.valueOf(user.getNoOfFriends());
-
-                    String[] hobbies = rowData[13].substring(2, rowData[13].length()-2).split(",");
-                    for(int i=0; i<user.getHobbies().size(); i++){
-                        if(!user.getHobbies().get(i).equals(hobbies[i])){
-                            rowData[13] = String.format("\"%s\"", user.getHobbies());
-                            break;
-                        }
-                    }
-
-
-
-                    lines.add(String.format("%s,%s,%s,%s,\"%s\",%s,%s,%s,\"%s\",\"%s\",\"%s\"", line, user.getName(), user.getBirthday(), user.getAge(), user.getAddress(), user.getGender(), user.getStatus(), user.getNoOfFriends(), user.getHobbies(), user.getJobs(), user.getRequestList()));
-                }else
-                    lines.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))) {
-            for (String rowData : lines) {
-                String line = String.join(",", rowData);
-                writer.write(line);
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-
     // Get User object
     public User getProfile(String emailOrPhoneNoOrUsername){
         UserBuilder userProfile = new UserBuilder();
@@ -220,25 +144,35 @@ public class Database {
     }
 
     // Find users with search keyword
-    public ArrayList<String> ifContains(String emailOrPhoneNoOrUsernameOrName){
-        ArrayList<String> contains = new ArrayList<>();
+    public ArrayList<User> ifContains(String emailOrPhoneNoOrUsernameOrName){
+        emailOrPhoneNoOrUsernameOrName = emailOrPhoneNoOrUsernameOrName.toLowerCase();
+        ArrayList<User> contains = new ArrayList<>();
+        ArrayList<User> tempContains = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] rowData = line.split(",(?![^\\[]*\\])");
-                // Users who hasn't setup profile will not be in the list (if the search is by name)
+                // User who has not setup account is not included
                 if(rowData.length>6){
-                    if(rowData[1].equals(emailOrPhoneNoOrUsernameOrName) || rowData[2].equals(emailOrPhoneNoOrUsernameOrName) || rowData[3].equals(emailOrPhoneNoOrUsernameOrName) || rowData[6].toLowerCase().contains(emailOrPhoneNoOrUsernameOrName.toLowerCase())){
-                        contains.add(rowData[1]);
-                    }
+                    User u = getProfile(rowData[1]);
+                    contains.add(u);
                 }
-            }
-            return contains;    // Return ArrayList of username
+            }    
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Operation failed.");
-        return null;
+
+        for(int i=0; i<emailOrPhoneNoOrUsernameOrName.length(); i++){
+            for(int j=0; j<contains.size(); j++){
+                String name = contains.get(j).getName().toLowerCase();
+                if(name.charAt(i)==emailOrPhoneNoOrUsernameOrName.charAt(i)){
+                    tempContains.add(contains.get(j));
+                }
+            }
+            contains = new ArrayList<>(tempContains);
+            tempContains.clear();
+        }
+        return contains;
     }
 
     // Get friend request list

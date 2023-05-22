@@ -238,11 +238,7 @@ public class AccountManagement {
         sc.nextLine();
         String emailOrPhoneNoOrUsernameOrName =  sc.nextLine();
         System.out.println("*************************");
-        ArrayList<String> usernameResult = database.ifContains(emailOrPhoneNoOrUsernameOrName);     // ArrayList of usernames of search result
-        ArrayList<User> result = new ArrayList<>();     // ArrayList of User objects of search result
-        for(String x : usernameResult){
-            result.add(database.getProfile(x));
-        }
+        ArrayList<User> result = database.ifContains(emailOrPhoneNoOrUsernameOrName);     // ArrayList of user objects of search result
 
         // Sort the names alphabetically
         for(int i=1; i<result.size(); i++){
