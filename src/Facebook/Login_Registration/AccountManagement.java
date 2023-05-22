@@ -329,7 +329,7 @@ public class AccountManagement {
                 case 1: connection.confirmRequest(requestList.get(i), user, graph);
                         connection.cancelRequest(requestList.get(i), user);
                         break;
-                case 2: connection.cancelRequest(user, requestList.get(i));
+                case 2: connection.cancelRequest(requestList.get(i), user);
                         break;
 
             }
@@ -340,7 +340,6 @@ public class AccountManagement {
         int choice = 1;
         while(choice>0){
             ArrayList<String> friends = connection.displayNewestFriends(user, graph);
-            System.out.println("(" + friends.size() + " friends)");
             System.out.println("-1 - Sort friend list");
             System.out.println("0 - Back");
             System.out.println("*************************");

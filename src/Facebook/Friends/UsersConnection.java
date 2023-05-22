@@ -127,11 +127,9 @@ public class UsersConnection {
             // User himself and his friends are not included in recommendation list
             if(!v.get(i).equals(u1.getUsername()) && !graph.hasEdge(graph, u1.getUsername(), v.get(i))){
                 User u2 = database.getProfile(v.get(i));
-                // Users yet to setup account are not included in recommendation list
-                if(u2.getName()!=null){
+                // Users yet to setup account and users that have already reqeusted to be friend are not included in recommendation list
+                if(u2.getName()!=null && !checkRequest(u1, u2)){
                     int totalMutual = getTotalMutual(u1, u2, graph);
-                    //
-                    System.out.println(v.get(i));
                     recomUser.add(u2);
                     mutualNo.add(totalMutual);
                 }
@@ -231,6 +229,7 @@ public class UsersConnection {
     public ArrayList<String> displayNewestFriends(User user, ConnectionGraph<String> graph){
         ArrayList<String> friends = graph.getNeighbours(graph, user.getUsername());
         Collections.reverse(friends);
+        System.out.println("<" + friends.size() + " friends>");
         for(int i=1; i<=friends.size(); i++){
             User u = database.getProfile(friends.get(i-1));
             System.out.println(i + " - " + u.getName());
@@ -242,6 +241,7 @@ public class UsersConnection {
     // Display oldest friends at top (ArrayList-loop from tail of ArrayList)
     public ArrayList<String> displayOldestFriends(User user, ConnectionGraph<String> graph){
         ArrayList<String> friends = graph.getNeighbours(graph, user.getUsername());
+        System.out.println("<" + friends.size() + " friends>");
         for(int i=1; i<=friends.size(); i++){
             User u = database.getProfile(friends.get(i-1));
             System.out.println(i + " - " + u.getName());
